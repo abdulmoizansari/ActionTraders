@@ -1,22 +1,401 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Action Traders — Fire, Safety & Security</title>
-    <meta
-      name="description"
-      content="Action Traders, Karachi. Design, supply, install and commission fire hydrant, alarm and suppression systems, PPE and safety signs. Est. 2018."
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/styles.css?v=4" />
-  </head>
-  <body>
-    <div id="app"></div>
-    <div id="toast" class="toast"></div>
-    <script src="js/data.js?v=4"></script>
-    <script src="js/app.js?v=4"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Action Traders — Fire, Safety & Security</title>
+  
+  <link rel="icon" type="image/png" href="img/logo-small.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Colors matched with your logo (Navy Blue & Yellow) */
+    :root {
+      --primary: #0a1f44; /* Navy Blue from logo */
+      --accent: #f5b800; /* Yellow from logo */
+      --primary-dark: #071630;
+      --text-dark: #111827;
+      --text-gray: #4b5563;
+      --bg-light: #f9fafb;
+      --white: #ffffff;
+      --border: #e5e7eb;
+      --radius: 8px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--white); color: var(--text-dark); font-family: 'Inter', sans-serif; line-height: 1.6; }
+    h1, h2, h3, h4 { font-family: 'Merriweather', serif; font-weight: 700; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; height: auto; display: block; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    
+    /* Topbar */
+    .topbar { background: var(--primary); color: #d1d5db; font-size: 13px; padding: 10px 0; }
+    .topbar .container { display: flex; justify-content: space-between; flex-wrap: wrap; }
+    .topbar a:hover { color: var(--white); }
+    .topbar b { color: var(--white); }
+
+    /* Header */
+    .header { position: sticky; top: 0; background: var(--white); border-bottom: 2px solid var(--border); z-index: 1000; }
+    .header-main { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; }
+    .logo img { height: 65px; width: auto; object-fit: contain; }
+    
+    .nav-links { display: flex; gap: 25px; font-weight: 600; font-size: 15px; }
+    .nav-links a { color: var(--text-dark); transition: 0.3s; cursor: pointer; }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+
+    .btn { padding: 12px 24px; border-radius: var(--radius); font-weight: 700; cursor: pointer; border: none; transition: 0.3s; display: inline-block; text-align: center; font-family: 'Inter', sans-serif;}
+    .btn-red { background: var(--primary); color: var(--white); }
+    .btn-red:hover { background: var(--primary-dark); }
+    .btn-outline { border: 2px solid var(--primary); color: var(--primary); background: transparent; }
+    .btn-outline:hover { background: var(--primary); color: var(--white); }
+
+    /* Page Heroes */
+    .page-hero { background: var(--bg-light); padding: 60px 0; border-bottom: 1px solid var(--border); text-align: center; border-top: 4px solid var(--accent); }
+    .page-hero h1 { font-size: 38px; color: var(--primary); margin-bottom: 10px; }
+    .page-hero p { font-size: 18px; color: var(--text-gray); }
+
+    /* Home Hero */
+    .hero { padding: 80px 0; border-bottom: 1px solid var(--border); background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%); }
+    .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+    .hero h1 { font-size: 42px; line-height: 1.2; margin-bottom: 20px; color: var(--primary); }
+    .hero p { font-size: 17px; color: var(--text-gray); margin-bottom: 30px; }
+    
+    /* Image Container for Small Logo */
+    .hero-img { border-radius: var(--radius); overflow: hidden; box-shadow: 0 10px 30px rgba(10, 31, 68, 0.1); border: 1px solid var(--border); background: #fff; display: flex; align-items: center; justify-content: center; min-height: 400px; padding: 40px;}
+    .hero-img img { width: 100%; height: auto; object-fit: contain; max-height: 300px; }
+
+    /* Sections */
+    .section { padding: 80px 0; }
+    .section-gray { background: var(--bg-light); }
+    .section-title { font-size: 32px; text-align: center; margin-bottom: 15px; color: var(--primary); }
+    .section-subtitle { text-align: center; color: var(--text-gray); margin-bottom: 50px; font-size: 16px; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+    /* Features Grid */
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+    .feature-box { background: var(--white); padding: 30px; border-radius: var(--radius); border: 1px solid var(--border); border-top: 4px solid var(--accent); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+    .feature-box h3 { font-size: 20px; margin-bottom: 15px; font-family: 'Inter', sans-serif; color: var(--primary); }
+    .feature-box p { color: var(--text-gray); font-size: 15px; }
+
+    /* About Content */
+    .about-content { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+    .about-text h2 { font-size: 32px; margin-bottom: 20px; color: var(--primary); }
+    .about-text p { color: var(--text-gray); margin-bottom: 15px; font-size: 16px; }
+    
+    /* Contact Grid */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+    .contact-info-box { background: var(--bg-light); padding: 40px; border-radius: var(--radius); border: 1px solid var(--border); }
+    .contact-info-box h3 { font-size: 24px; margin-bottom: 20px; font-family: 'Inter', sans-serif; color: var(--primary);}
+    .contact-item { display: flex; margin-bottom: 20px; }
+    .contact-item strong { display: block; width: 100px; color: var(--text-dark); }
+
+    /* Portfolio Grid */
+    .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+    .portfolio-item { position: relative; border-radius: var(--radius); overflow: hidden; aspect-ratio: 4/3; border: 1px solid var(--border); background: #f3f4f6; }
+    .portfolio-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+    .portfolio-item:hover img { transform: scale(1.05); }
+    .portfolio-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10, 31, 68, 0.9), transparent); opacity: 0; transition: 0.3s; display: flex; align-items: flex-end; padding: 20px; }
+    .portfolio-item:hover .portfolio-overlay { opacity: 1; }
+    .portfolio-overlay h4 { color: var(--white); font-family: 'Inter', sans-serif; font-size: 16px; }
+
+    /* Footer */
+    footer { background: var(--primary); color: #9ca3af; padding: 60px 0 20px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-logo img { height: 80px; background: var(--white); padding: 10px; border-radius: 4px; margin-bottom: 20px; }
+    footer h4 { color: var(--white); margin-bottom: 20px; font-size: 18px; font-family: 'Inter', sans-serif; }
+    footer a { display: block; color: #9ca3af; margin-bottom: 10px; cursor: pointer; }
+    footer a:hover { color: var(--accent); }
+    footer p { margin-bottom: 10px; }
+    .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid #1f2937; font-size: 14px; color: #9ca3af; }
+
+    /* Modal */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 2000; }
+    .modal-content { background: var(--white); padding: 40px; border-radius: var(--radius); width: 90%; max-width: 500px; position: relative; border-top: 5px solid var(--accent); }
+    .close-btn { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: var(--text-gray); background: none; border: none; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--primary); }
+    .form-group input, .form-group textarea { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius); outline: none; font-family: 'Inter', sans-serif;}
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--primary); }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero-grid, .about-content, .contact-grid { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="topbar">
+    <div class="container">
+      <div>Mon–Sat: 10:00 AM – 7:00 PM · Karachi, Pakistan</div>
+      <div><a href="tel:03303560372"><b>0330-3560372</b></a> · <a href="mailto:action.traders1453@gmail.com">action.traders1453@gmail.com</a></div>
+    </div>
+  </div>
+
+  <!-- Header (Full Logo) -->
+  <header class="header">
+    <div class="container header-main">
+      <a onclick="app.navigate('home')" class="logo" style="cursor: pointer;">
+        <img src="img/logo-full.png" alt="Action Traders Logo">
+      </a>
+      
+      <nav class="nav-links">
+        <a onclick="app.navigate('home')" id="nav-home" class="active">Home</a>
+        <a onclick="app.navigate('about')" id="nav-about">About Us</a>
+        <a onclick="app.navigate('portfolio')" id="nav-portfolio">Portfolio</a>
+        <a onclick="app.navigate('contact')" id="nav-contact">Contact</a>
+      </nav>
+      
+      <div>
+        <button class="btn btn-red" onclick="app.openModal()">Get a Quote</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main App Container -->
+  <main id="app-content">
+    
+    <!-- 1. HOME PAGE -->
+    <div id="page-home" class="page">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <h1>Supplier of Choice for Fire Detection & Protection</h1>
+            <p>Action Traders designs, supplies, and installs fire hydrant, alarm, and suppression systems — plus PPE and safety gear across Pakistan.</p>
+            <div style="display: flex; gap: 15px;">
+              <a onclick="app.navigate('portfolio')" class="btn btn-red">View Portfolio</a>
+              <a onclick="app.navigate('about')" class="btn btn-outline">About Us</a>
+            </div>
+          </div>
+          
+          <!-- Yahan Small Logo use ho gaya hai (Pehli Image) -->
+          <div class="hero-img">
+            <img src="img/logo-small.png" alt="Action Traders Icon">
+          </div>
+          
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <h2 class="section-title">Why Choose Action Traders</h2>
+          <p class="section-subtitle">We deliver complete, compliant, and reliable fire safety solutions tailored to your exact requirements.</p>
+          <div class="features-grid">
+            <div class="feature-box">
+              <h3>Turnkey Installations</h3>
+              <p>Complete design, supply, and commissioning of fire-fighting systems for commercial and industrial sites.</p>
+            </div>
+            <div class="feature-box">
+              <h3>Quality & Compliance</h3>
+              <p>Globally accepted standards. Products undergo strict inspection for maximum safety.</p>
+            </div>
+            <div class="feature-box">
+              <h3>Maintenance & Refilling</h3>
+              <p>Expert servicing and refilling of dry powder, CO2, and foam extinguishers.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 2. ABOUT PAGE -->
+    <div id="page-about" class="page hidden">
+      <div class="page-hero">
+        <div class="container">
+          <h1>About Action Traders</h1>
+          <p>A name built on quality — fire, safety, and security since 2018.</p>
+        </div>
+      </div>
+      <section class="section">
+        <div class="container about-content">
+          <div class="about-text">
+            <h2>Leading Supplier Since 2018</h2>
+            <p>Action Traders is a leading supplier of fire detection and fire protection systems in Pakistan. We offer design, supply, installation, testing, and commissioning, backed by dedicated service and engineering teams.</p>
+            <p>Established in Karachi, we supply fire extinguishers, fire alarm systems, metal detectors, PPE, and security items — with competitive pricing and prompt service across the country.</p>
+            <p>We follow globally accepted standards for developers, retailers, and industry. Solutions are tailored to each client’s statutory compliance and duty of care.</p>
+            <div style="background: var(--bg-light); padding: 20px; border-radius: var(--radius); margin-top: 20px; border-left: 4px solid var(--accent);">
+              <p style="margin: 0;"><b>Owner:</b> Abdul Basit Hasnain</p>
+              <p style="margin: 0;"><b>NTN:</b> 9531375-6</p>
+            </div>
+          </div>
+          
+          <!-- Yahan bhi small logo use kiya hai taake page balanced lage -->
+          <div class="hero-img" style="min-height: 300px;">
+            <img src="img/logo-small.png" alt="Action Traders" style="max-height: 200px;">
+          </div>
+          
+        </div>
+      </section>
+    </div>
+
+    <!-- 3. PORTFOLIO PAGE -->
+    <div id="page-portfolio" class="page hidden">
+      <div class="page-hero">
+        <div class="container">
+          <h1>Our Portfolio</h1>
+          <p>Showcase of our installations, safety equipment, and projects.</p>
+        </div>
+      </div>
+      <section class="section">
+        <div class="container">
+          <div class="portfolio-grid" id="portfolio-grid">
+            <!-- Images loaded via JS -->
+          </div>
+          <div style="text-align: center; margin-top: 50px;" id="load-more-container">
+            <button class="btn btn-outline" onclick="app.loadMore()">Load More Images</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 4. CONTACT PAGE -->
+    <div id="page-contact" class="page hidden">
+      <div class="page-hero">
+        <div class="container">
+          <h1>Contact Us</h1>
+          <p>Reach out for stock, specs, and project quotes.</p>
+        </div>
+      </div>
+      <section class="section">
+        <div class="container contact-grid">
+          <div class="contact-info-box">
+            <h3>Get in Touch</h3>
+            <div class="contact-item">
+              <strong>Phone:</strong> <span>0330-3560372</span>
+            </div>
+            <div class="contact-item">
+              <strong>Mobile:</strong> <span>0316-1136245</span>
+            </div>
+            <div class="contact-item">
+              <strong>Email:</strong> <span>action.traders1453@gmail.com</span>
+            </div>
+            <div class="contact-item">
+              <strong>Hours:</strong> <span>Mon–Sat: 10:00 AM – 7:00 PM</span>
+            </div>
+            <div class="contact-item">
+              <strong>Address:</strong> <span>149 Block 16, Water Pump, F.B Area, Karachi-75950</span>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+            <h3 style="margin-bottom: 15px; font-family: 'Inter', sans-serif; color: var(--primary);">Need a Quotation?</h3>
+            <p style="color: var(--text-gray); text-align: center; margin-bottom: 25px;">Click the button below to fill out your requirement and we will email you back promptly.</p>
+            <button class="btn btn-red" style="width: 100%;" onclick="app.openModal()">Send Your Requirement</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- Footer (Full Logo) -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-logo">
+            <img src="img/logo-full.png" alt="Action Traders">
+          </div>
+          <p>Leading supplier of fire detection, fire protection, and safety gear. Serving Karachi and all of Pakistan with premium solutions.</p>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <a onclick="app.navigate('home')">Home</a>
+          <a onclick="app.navigate('about')">About Us</a>
+          <a onclick="app.navigate('portfolio')">Portfolio</a>
+          <a onclick="app.navigate('contact')">Contact</a>
+        </div>
+        <div>
+          <h4>Contact Info</h4>
+          <p><b>Owner:</b> Abdul Basit Hasnain</p>
+          <p><b>Phone:</b> 0330-3560372</p>
+          <p><b>Email:</b> action.traders1453@gmail.com</p>
+          <p><b>Address:</b> 149 Block 16, Water Pump, F.B Area, Karachi</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2024 Action Traders. All rights reserved. | NTN: 9531375-6
+      </div>
+    </div>
+  </footer>
+
+  <!-- Quote Modal -->
+  <div id="quoteModal" class="modal-overlay">
+    <div class="modal-content">
+      <button class="close-btn" onclick="app.closeModal()">&times;</button>
+      <h2 style="margin-bottom: 20px; font-family: 'Inter'; color: var(--primary);">Get a Quote</h2>
+      <p style="color: var(--text-gray); margin-bottom: 25px; font-size: 14px;">Tell us your requirement and we'll email you right back.</p>
+      <form action="https://formsubmit.co/action.traders1453@gmail.com" method="POST">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_subject" value="New Quote Request - Action Traders">
+        <div class="form-group"><label>Name</label><input type="text" name="name" required></div>
+        <div class="form-group"><label>Email</label><input type="email" name="email" required></div>
+        <div class="form-group"><label>Phone Number</label><input type="text" name="phone" required></div>
+        <div class="form-group"><label>Requirement</label><textarea name="requirement" rows="4" required></textarea></div>
+        <button type="submit" class="btn btn-red" style="width: 100%;">Submit Request</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const app = {
+      portfolioTotalImages: 167, 
+      imagesPerLoad: 12, 
+      loadedCount: 0,
+      portfolioNames: ['Fire Alarm System', 'Hydrant Installation', 'PPE Supply', 'Safety Equipment', 'Suppression System', 'Industrial Safety'],
+
+      navigate: function(pageName) {
+        document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
+        document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
+        
+        document.getElementById(`page-${pageName}`).classList.remove('hidden');
+        document.getElementById(`nav-${pageName}`).classList.add('active');
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        if(pageName === 'portfolio' && this.loadedCount === 0) {
+          this.loadMore();
+        }
+      },
+
+      openModal: function() {
+        document.getElementById('quoteModal').style.display = 'flex';
+      },
+      closeModal: function() {
+        document.getElementById('quoteModal').style.display = 'none';
+      },
+
+      loadMore: function() {
+        const grid = document.getElementById('portfolio-grid');
+        const end = Math.min(this.loadedCount + this.imagesPerLoad, this.portfolioTotalImages);
+        
+        for (let i = this.loadedCount + 1; i <= end; i++) {
+          const imgSrc = `portfolio/${i}.jpg`; 
+          const projectName = this.portfolioNames[i % this.portfolioNames.length];
+
+          const item = document.createElement('div');
+          item.className = 'portfolio-item';
+          
+          item.innerHTML = `
+            <img src="${imgSrc}" alt="Project ${i}" loading="lazy" onerror="this.src='https://placehold.co/600x400/e5e7eb/6b7280?text=Image+Not+Found'">
+            <div class="portfolio-overlay">
+              <h4>${projectName}</h4>
+            </div>
+          `;
+          grid.appendChild(item);
+        }
+
+        this.loadedCount = end;
+
+        if (this.loadedCount >= this.portfolioTotalImages) {
+          document.getElementById('load-more-container').style.display = 'none';
+        }
+      }
+    };
+  </script>
+</body>
 </html>

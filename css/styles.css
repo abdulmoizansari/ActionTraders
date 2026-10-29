@@ -550,3 +550,18 @@ footer a:hover { color: #fff; }
   .cat-grid { grid-template-columns: repeat(2, 1fr); }
   .office { grid-template-columns: 1fr; }
 }
+
+/* Fix for Logo Image */
+.logo-mark {
+  object-fit: contain;
+  background: #fff;
+  padding: 4px;
+}
+
+/* Logo image inside the .logo-mark badge slot */
+.logo-mark {
+  object-fit: contain;
+  background: #fff;
+  padding: 4px;
+}
+

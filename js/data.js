@@ -3,17 +3,15 @@ window.AT = window.AT || {};
 AT.brand = {
   name: "Action Traders",
   tagline: "Fire · Safety · Security",
-  owner: "Muhammad Irfan",
-  ntn: "3443721-5",
+  owner: "Abdul Basit Hasnain",
+  ntn: "9531375-6",
   established: "2018",
-  phone: "021-36373989",
-  phoneAlt: "0333-2283989",
-  email: "info@actiontraders.pk",
+  phone: "03303560372",
+  phoneAlt: "03161136245",
+  email: "action.traders1453@gmail.com",
   hours: "Monday–Saturday: 10:00 AM – 7:00 PM",
   delivery: "Supply, install & commission across Pakistan · Based in Karachi",
   address1: "149 Block 16, Water Pump, F.B Area, Karachi-75950",
-  address2: "808 Block 2, F.B Area, Karachi-75950",
-  workshop: "Shop # 25, KMC Stadium, Marvick Road, Karachi",
 };
 
 AT.imgs = {

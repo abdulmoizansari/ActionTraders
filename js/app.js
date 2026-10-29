@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
   const root = document.getElementById("app");
   const toast = document.getElementById("toast");
   const { brand, categories, products, services, clients, features, navMega, imgs, quality, ethos, premises, specializations } = AT;
@@ -26,20 +26,20 @@
   }
 
   const glyphs = {
-    ppe: "🪖",
-    fall: "🪢",
-    clothing: "🦺",
-    eyewash: "💧",
-    fire: "🧯",
-    lifting: "🏗️",
-    traffic: "🚦",
-    spill: "🧪",
-    signs: "⚠️",
-    loto: "🔒",
-    electronic: "🚨",
-    firstaid: "⛑️",
-    janitorial: "🧹",
-    medical: "🩺",
+    ppe: "ðŸª–",
+    fall: "ðŸª¢",
+    clothing: "ðŸ¦º",
+    eyewash: "ðŸ’§",
+    fire: "ðŸ§¯",
+    lifting: "ðŸ—ï¸",
+    traffic: "ðŸš¦",
+    spill: "ðŸ§ª",
+    signs: "âš ï¸",
+    loto: "ðŸ”’",
+    electronic: "ðŸš¨",
+    firstaid: "â›‘ï¸",
+    janitorial: "ðŸ§¹",
+    medical: "ðŸ©º",
   };
 
   function catById(id) {
@@ -60,6 +60,8 @@
     if (parts[0] === "about") return renderAbout();
     if (parts[0] === "services") return renderServices();
     if (parts[0] === "clients") return renderClients();
+    if (parts[0] === "portfolio") return renderPortfolio();
+    if (parts[0] === "portfolio") return renderPortfolio();
     if (parts[0] === "contact") return renderContact();
     if (parts[0] === "cart") return renderCart();
     if (parts[0] === "privacy") return renderPrivacy();
@@ -70,14 +72,14 @@
     root.innerHTML = `
       <div class="topbar">
         <div class="wrap">
-          <div>${brand.hours} · ${brand.delivery}</div>
-          <div><a href="tel:${brand.phone}"><b>${brand.phone}</b></a> · <a href="mailto:${brand.email}">${brand.email}</a></div>
+          <div>${brand.hours} Â· ${brand.delivery}</div>
+          <div><a href="tel:${brand.phone}"><b>${brand.phone}</b></a> Â· <a href="mailto:${brand.email}">${brand.email}</a></div>
         </div>
       </div>
       <header class="header">
         <div class="wrap header-main">
           <a class="logo" href="#/">
-            <div class="logo-mark">AT</div>
+            <img src="img/logo.png" alt="Action Traders" class="logo-mark" />
             Action <span>Traders</span>
           </a>
           <form class="search" onsubmit="AT.search(event)">
@@ -94,7 +96,7 @@
           <div class="wrap">
             <a href="#/" class="${active === "home" ? "active" : ""}">Home</a>
             <div class="shop-wrap" id="shop-wrap">
-              <button class="mega-toggle" type="button" onclick="AT.toggleMega()">Shop ▾</button>
+              <button class="mega-toggle" type="button" onclick="AT.toggleMega()">Shop â–¾</button>
               <div class="mega">
                 ${navMega
                   .map(
@@ -110,6 +112,8 @@
             <a href="#/about" class="${active === "about" ? "active" : ""}">About Us</a>
             <a href="#/services" class="${active === "services" ? "active" : ""}">Our Services</a>
             <a href="#/clients" class="${active === "clients" ? "active" : ""}">Our Clients</a>
+            <a href="#/portfolio" class="${active === "portfolio" ? "active" : ""}">Portfolio</a>
+            <a href="#/portfolio" class="${active === "portfolio" ? "active" : ""}">Portfolio</a>
             <a href="#/contact" class="${active === "contact" ? "active" : ""}">Contact</a>
           </div>
         </nav>
@@ -118,7 +122,7 @@
       <footer>
         <div class="wrap footer-grid">
           <div>
-            <div class="logo"><div class="logo-mark">AT</div> Action <span>Traders</span></div>
+            <div class="logo"><img src="img/logo.png" alt="Action Traders" class="logo-mark" /> Action <span>Traders</span></div>
             <p>Leading supplier of fire detection, fire protection, PPE, and safety signs in Pakistan. Established ${brand.established} in Karachi.</p>
             <p>${brand.address1}<br>${brand.workshop}</p>
           </div>
@@ -139,11 +143,11 @@
             <a href="tel:${brand.phone}">${brand.phone} (${brand.phoneAlt})</a>
             <a href="mailto:${brand.email}">${brand.email}</a>
             <a href="tel:${brand.phoneAlt}">${brand.phoneAlt}</a>
-            <p>Owner: ${brand.owner} · NTN ${brand.ntn}</p>
+            <p>Owner: ${brand.owner} Â· NTN ${brand.ntn}</p>
           </div>
         </div>
         <div class="wrap legal">
-          <span>© ${new Date().getFullYear()} Action Traders. Layout inspired by a Pakistan safety-supply storefront.</span>
+          <span>Â© ${new Date().getFullYear()} Action Traders. Layout inspired by a Pakistan safety-supply storefront.</span>
           <span>${brand.tagline}</span>
         </div>
       </footer>
@@ -155,7 +159,7 @@
   function productCard(p) {
     const media = p.img
       ? `<img src="${p.img}" alt="${p.name}">`
-      : `<div class="glyph">${glyphs[p.cat] || "📦"}</div>`;
+      : `<div class="glyph">${glyphs[p.cat] || "ðŸ“¦"}</div>`;
     return `
       <article class="product">
         <a href="#/product/${p.id}">
@@ -182,9 +186,9 @@
       <section class="hero">
         <div class="wrap hero-grid">
           <div>
-            <div class="kicker">${brand.tagline} · Est. ${brand.established}</div>
+            <div class="kicker">${brand.tagline} Â· Est. ${brand.established}</div>
             <h1>Supplier of choice for fire detection and fire protection systems</h1>
-            <p>Action Traders designs, supplies, installs, tests, and commissions fire hydrant, alarm, and suppression systems — plus PPE, signs, and safety gear — from Karachi across Pakistan.</p>
+            <p>Action Traders designs, supplies, installs, tests, and commissions fire hydrant, alarm, and suppression systems â€” plus PPE, signs, and safety gear â€” from Karachi across Pakistan.</p>
             <div class="hero-cta">
               <a class="btn btn-red" href="#/shop">Browse products</a>
               <a class="btn btn-ghost" href="#/services">Our services</a>
@@ -282,7 +286,7 @@
       <div class="page-hero"><div class="wrap">
         <div class="breadcrumb"><a href="#/">Home</a> / Shop ${cat ? "/ " + cat.name : ""}</div>
         <h1>${cat ? cat.name : "Shop"}</h1>
-        <p>${list.length} products · Call for price on every item</p>
+        <p>${list.length} products Â· Call for price on every item</p>
       </div></div>
       <section class="section">
         <div class="wrap two-col shop-layout">
@@ -322,7 +326,7 @@
             <h2>${p.name}</h2>
             <p class="price" style="font-size:28px">Call for Price</p>
             <p>${p.desc || "Industrial-grade equipment supplied across Pakistan. Ask our team for current stock, specifications, and delivery to your city."}</p>
-            <p>Phone <b>${brand.phone}</b> · ${brand.hours}</p>
+            <p>Phone <b>${brand.phone}</b> Â· ${brand.hours}</p>
             <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
               <button class="btn btn-red" type="button" onclick="AT.add('${p.id}')">Add to enquiry cart</button>
               <a class="btn btn-outline" href="#/contact">Ask a question</a>
@@ -342,14 +346,14 @@
   function renderAbout() {
     layout(
       `
-      <div class="page-hero"><div class="wrap"><div class="breadcrumb"><a href="#/">Home</a> / About</div><h1>About Action Traders</h1><p>A name built on quality — fire, safety, and security since ${brand.established}.</p></div></div>
+      <div class="page-hero"><div class="wrap"><div class="breadcrumb"><a href="#/">Home</a> / About</div><h1>About Action Traders</h1><p>A name built on quality â€” fire, safety, and security since ${brand.established}.</p></div></div>
       <section class="section"><div class="wrap about-grid">
         <div>
           <h2>Introduction</h2>
           <p>Action Traders is a leading supplier of fire detection and fire protection systems. We offer design, supply, installation, testing, and commissioning, backed by service, engineering, and business-development teams.</p>
-          <p>We follow globally accepted standards for developers, retailers, and industry. Solutions are tailored to each client’s statutory compliance and duty of care. Training, maintenance, and system know-how reduce risk for our clientele.</p>
-          <p>Established in Karachi in ${brand.established}, we supply fire extinguishers (dry powder, CO₂, AFFF foam, water, Halotron), fire alarm systems, metal detectors, PPE, and security items — with competitive pricing and prompt service.</p>
-          <p><b>Owner:</b> ${brand.owner} · <b>NTN:</b> ${brand.ntn}</p>
+          <p>We follow globally accepted standards for developers, retailers, and industry. Solutions are tailored to each clientâ€™s statutory compliance and duty of care. Training, maintenance, and system know-how reduce risk for our clientele.</p>
+          <p>Established in Karachi in ${brand.established}, we supply fire extinguishers (dry powder, COâ‚‚, AFFF foam, water, Halotron), fire alarm systems, metal detectors, PPE, and security items â€” with competitive pricing and prompt service.</p>
+          <p><b>Owner:</b> ${brand.owner} Â· <b>NTN:</b> ${brand.ntn}</p>
         </div>
         <div class="bleed-img"><img src="${imgs.intro}" alt="Action Traders fire protection"></div>
       </div></section>
@@ -454,7 +458,7 @@
               <div><h4>F.B Area office</h4><p>${brand.address2}<br>Cell ${brand.phoneAlt}</p></div>
             </div>
             <p><b>Workshop:</b> ${brand.workshop}</p>
-            <p>NTN ${brand.ntn} · ${brand.hours}</p>
+            <p>NTN ${brand.ntn} Â· ${brand.hours}</p>
           </div>
         </div>
       </div></section>
@@ -472,7 +476,7 @@
           <td>${p.name}</td>
           <td>
             <div class="qty">
-              <button type="button" onclick="AT.qty('${item.id}',-1)">−</button>
+              <button type="button" onclick="AT.qty('${item.id}',-1)">âˆ’</button>
               <span>${item.qty}</span>
               <button type="button" onclick="AT.qty('${item.id}',1)">+</button>
             </div>
@@ -484,7 +488,7 @@
       .join("");
     layout(
       `
-      <div class="page-hero"><div class="wrap"><h1>Enquiry cart</h1><p>Prices are quoted by phone or email — send the list to our team.</p></div></div>
+      <div class="page-hero"><div class="wrap"><h1>Enquiry cart</h1><p>Prices are quoted by phone or email â€” send the list to our team.</p></div></div>
       <section class="section"><div class="wrap panel">
         ${
           cart.length
@@ -532,7 +536,7 @@
   };
   AT.contact = function (e) {
     e.preventDefault();
-    showToast("Thanks — we will get back to you shortly.");
+    showToast("Thanks â€” we will get back to you shortly.");
     e.target.reset();
   };
   AT.toggleNav = function () {
@@ -542,6 +546,46 @@
     document.getElementById("shop-wrap").classList.toggle("open");
   };
 
+  
+  function renderPortfolio() {
+    const portfolioImages = [
+      "img/portfolio/project1.jpg",
+      "img/portfolio/project2.jpg",
+      "img/portfolio/project3.jpg",
+      "img/portfolio/project4.jpg"
+    ];
+    
+    layout(
+      `<div class="page-hero"><div class="wrap"><div class="breadcrumb"><a href="#/">Home</a> / Portfolio</div><h1>Our Custom Portfolio</h1><p>A showcase of our recent fire safety and installation projects.</p></div></div>
+      <section class="section"><div class="wrap">
+        <div class="product-grid">
+          ${portfolioImages.map((img, index) => <div class="panel" style="padding:10px"><img src="${img}" alt="Project $<button class="cqgq3w"></button>{index + 1}" style="width:100%; border-radius:8px; height:250px; object-fit:cover;"><h3>Project $<button class="cqgq3w"></button>{index + 1}</h3><p class="muted">Custom Fire Safety Installation</p></div>).join("")}
+        </div>
+      </div></section>`,
+      "portfolio"
+    );
+  }
+  
+  function renderPortfolio() {
+    const portfolioImages = [
+      "img/portfolio/project1.jpg",
+      "img/portfolio/project2.jpg",
+      "img/portfolio/project3.jpg",
+      "img/portfolio/project4.jpg"
+    ];
+    
+    layout(
+      `<div class="page-hero"><div class="wrap"><div class="breadcrumb"><a href="#/">Home</a> / Portfolio</div><h1>Our Custom Portfolio</h1><p>A showcase of our recent fire safety and installation projects.</p></div></div>
+      <section class="section"><div class="wrap">
+        <div class="product-grid">
+          ${portfolioImages.map((img, index) => <div class="panel" style="padding:10px"><img src="${img}" alt="Project $<button class="cqgq3w"></button>{index + 1}" style="width:100%; border-radius:8px; height:250px; object-fit:cover;"><h3>Project $<button class="cqgq3w"></button>{index + 1}</h3><p class="muted">Custom Fire Safety Installation</p></div>).join("")}
+        </div>
+      </div></section>`,
+      "portfolio"
+    );
+  }
   window.addEventListener("hashchange", route);
   route();
 })();
+
+
