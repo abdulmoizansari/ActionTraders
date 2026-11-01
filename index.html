@@ -9,10 +9,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@700&display=swap" rel="stylesheet">
   
   <style>
-    /* Colors matched with your logo (Navy Blue & Yellow) */
     :root {
-      --primary: #0a1f44; /* Navy Blue from logo */
-      --accent: #f5b800; /* Yellow from logo */
+      --primary: #0a1f44; 
+      --accent: #f5b800; 
       --primary-dark: #071630;
       --text-dark: #111827;
       --text-gray: #4b5563;
@@ -20,35 +19,130 @@
       --white: #ffffff;
       --border: #e5e7eb;
       --radius: 8px;
+      
+      /* Premium Easing Curves */
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: var(--white); color: var(--text-dark); font-family: 'Inter', sans-serif; line-height: 1.6; }
+    body { background: var(--white); color: var(--text-dark); font-family: 'Inter', sans-serif; line-height: 1.6; overflow-x: hidden;}
     h1, h2, h3, h4 { font-family: 'Merriweather', serif; font-weight: 700; }
     a { text-decoration: none; color: inherit; }
     img { max-width: 100%; height: auto; display: block; }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
     
+    /* Page Transition Animations */
+    @keyframes pageEnter {
+      from { opacity: 0; transform: translateY(24px) scale(0.995); filter: blur(4px); }
+      to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+    }
+    @keyframes revealUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .page-active {
+      animation: pageEnter 0.7s var(--ease-out-expo) forwards;
+    }
+
+    /* Staggered children reveal for pages */
+    .page-active .hero h1,
+    .page-active .hero p,
+    .page-active .hero .btn-group,
+    .page-active .hero-img,
+    .page-active .page-hero h1,
+    .page-active .page-hero p,
+    .page-active .section-title,
+    .page-active .section-subtitle {
+      animation: pageEnter 0.8s var(--ease-out-expo) backwards;
+    }
+    .page-active .hero h1, .page-active .page-hero h1 { animation-delay: 0.05s; }
+    .page-active .hero p, .page-active .page-hero p { animation-delay: 0.15s; }
+    .page-active .hero .btn-group { animation-delay: 0.25s; }
+    .page-active .hero-img { animation-delay: 0.2s; }
+    .page-active .section-title { animation-delay: 0.1s; }
+    .page-active .section-subtitle { animation-delay: 0.2s; }
+
+    /* Scroll Reveal */
+    .reveal { 
+      opacity: 0; 
+      transform: translateY(40px); 
+      transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+    }
+    .reveal.active { 
+      opacity: 1; 
+      transform: translateY(0); 
+    }
+
+    /* Staggered children inside reveal containers */
+    .reveal.active .feature-box,
+    .reveal.active .contact-item,
+    .reveal.active .footer-grid > div {
+      animation: revealUp 0.7s var(--ease-out-expo) backwards;
+    }
+    .reveal.active .feature-box:nth-child(1) { animation-delay: 0.1s; }
+    .reveal.active .feature-box:nth-child(2) { animation-delay: 0.2s; }
+    .reveal.active .feature-box:nth-child(3) { animation-delay: 0.3s; }
+
     /* Topbar */
     .topbar { background: var(--primary); color: #d1d5db; font-size: 13px; padding: 10px 0; }
     .topbar .container { display: flex; justify-content: space-between; flex-wrap: wrap; }
+    .topbar a { transition: color 0.3s ease; }
     .topbar a:hover { color: var(--white); }
     .topbar b { color: var(--white); }
 
     /* Header */
-    .header { position: sticky; top: 0; background: var(--white); border-bottom: 2px solid var(--border); z-index: 1000; }
-    .header-main { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; }
-    .logo img { height: 65px; width: auto; object-fit: contain; }
+    .header { 
+      position: sticky; top: 0; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); 
+      border-bottom: 2px solid var(--border); z-index: 1000; 
+      transition: background 0.4s var(--ease-out-quart), box-shadow 0.4s var(--ease-out-quart), padding 0.4s var(--ease-out-quart); 
+    }
+    .header.scrolled { 
+      box-shadow: 0 10px 40px rgba(10, 31, 68, 0.08); backdrop-filter: blur(16px) saturate(180%); padding: 5px 0; 
+    }
+    .header-main { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; transition: var(--ease-out-quart); }
+    .logo img { height: 65px; width: auto; object-fit: contain; transition: transform 0.5s var(--ease-spring), height 0.4s var(--ease-out-quart); }
+    .header.scrolled .logo img { height: 55px; }
+    .logo:hover img { transform: scale(1.03); }
     
     .nav-links { display: flex; gap: 25px; font-weight: 600; font-size: 15px; }
-    .nav-links a { color: var(--text-dark); transition: 0.3s; cursor: pointer; }
+    .nav-links a { color: var(--text-dark); cursor: pointer; position: relative; padding-bottom: 4px; transition: color 0.3s ease; }
+    .nav-links a::after { 
+      content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; background: var(--accent); 
+      transform: translateX(-50%); transition: width 0.4s var(--ease-out-expo); 
+    }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
     .nav-links a:hover, .nav-links a.active { color: var(--primary); }
 
-    .btn { padding: 12px 24px; border-radius: var(--radius); font-weight: 700; cursor: pointer; border: none; transition: 0.3s; display: inline-block; text-align: center; font-family: 'Inter', sans-serif;}
+    /* Premium Buttons */
+    .btn { 
+      padding: 12px 24px; border-radius: var(--radius); font-weight: 700; cursor: pointer; border: none; 
+      display: inline-block; text-align: center; font-family: 'Inter', sans-serif; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      position: relative; overflow: hidden;
+      transition: transform 0.35s var(--ease-spring), background 0.35s var(--ease-out-quart), box-shadow 0.35s var(--ease-out-quart), color 0.35s var(--ease-out-quart);
+    }
+    /* Shimmer sweep */
+    .btn::before {
+      content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
+      transition: left 0.6s var(--ease-out-expo); pointer-events: none;
+    }
+    .btn:hover::before { left: 100%; }
+    .btn:hover { transform: translateY(-2px) scale(1.015); }
+    .btn:active { transform: translateY(0) scale(0.985); transition-duration: 0.1s; }
+
     .btn-red { background: var(--primary); color: var(--white); }
-    .btn-red:hover { background: var(--primary-dark); }
-    .btn-outline { border: 2px solid var(--primary); color: var(--primary); background: transparent; }
-    .btn-outline:hover { background: var(--primary); color: var(--white); }
+    .btn-red:hover { background: var(--primary-dark); box-shadow: 0 8px 20px rgba(10, 31, 68, 0.3); }
+
+    .btn-outline { border: 2px solid var(--primary); color: var(--primary); background: transparent; z-index: 1; }
+    .btn-outline::after {
+      content: ''; position: absolute; inset: 0; background: var(--primary);
+      transform: scaleX(0); transform-origin: left; transition: transform 0.45s var(--ease-out-expo); z-index: -1;
+    }
+    .btn-outline:hover { color: var(--white); border-color: var(--primary); }
+    .btn-outline:hover::after { transform: scaleX(1); }
 
     /* Page Heroes */
     .page-hero { background: var(--bg-light); padding: 60px 0; border-bottom: 1px solid var(--border); text-align: center; border-top: 4px solid var(--accent); }
@@ -56,66 +150,122 @@
     .page-hero p { font-size: 18px; color: var(--text-gray); }
 
     /* Home Hero */
-    .hero { padding: 80px 0; border-bottom: 1px solid var(--border); background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%); }
+    .hero { padding: 100px 0; border-bottom: 1px solid var(--border); background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%); overflow: hidden; }
     .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
-    .hero h1 { font-size: 42px; line-height: 1.2; margin-bottom: 20px; color: var(--primary); }
-    .hero p { font-size: 17px; color: var(--text-gray); margin-bottom: 30px; }
+    .hero h1 { font-size: 46px; line-height: 1.15; margin-bottom: 20px; color: var(--primary); }
+    .hero p { font-size: 18px; color: var(--text-gray); margin-bottom: 30px; }
     
-    /* Image Container for Small Logo */
-    .hero-img { border-radius: var(--radius); overflow: hidden; box-shadow: 0 10px 30px rgba(10, 31, 68, 0.1); border: 1px solid var(--border); background: #fff; display: flex; align-items: center; justify-content: center; min-height: 400px; padding: 40px;}
+    .hero-img { 
+      border-radius: var(--radius); overflow: hidden; box-shadow: 0 20px 40px rgba(10, 31, 68, 0.08); border: 1px solid var(--border); 
+      background: #fff; display: flex; align-items: center; justify-content: center; min-height: 400px; padding: 40px; 
+      transition: transform 0.6s var(--ease-out-expo), box-shadow 0.6s var(--ease-out-expo); 
+    }
+    .hero-img:hover { transform: translateY(-5px); box-shadow: 0 30px 60px rgba(10, 31, 68, 0.12); }
     .hero-img img { width: 100%; height: auto; object-fit: contain; max-height: 300px; }
 
     /* Sections */
-    .section { padding: 80px 0; }
+    .section { padding: 100px 0; }
     .section-gray { background: var(--bg-light); }
-    .section-title { font-size: 32px; text-align: center; margin-bottom: 15px; color: var(--primary); }
-    .section-subtitle { text-align: center; color: var(--text-gray); margin-bottom: 50px; font-size: 16px; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .section-title { font-size: 34px; text-align: center; margin-bottom: 15px; color: var(--primary); }
+    .section-subtitle { text-align: center; color: var(--text-gray); margin-bottom: 60px; font-size: 17px; max-width: 600px; margin-left: auto; margin-right: auto; }
 
-    /* Features Grid */
+    /* Feature Boxes */
     .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-    .feature-box { background: var(--white); padding: 30px; border-radius: var(--radius); border: 1px solid var(--border); border-top: 4px solid var(--accent); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-    .feature-box h3 { font-size: 20px; margin-bottom: 15px; font-family: 'Inter', sans-serif; color: var(--primary); }
+    .feature-box { 
+      background: var(--white); padding: 40px 30px; border-radius: var(--radius); border: 1px solid var(--border); 
+      border-top: 4px solid var(--accent); box-shadow: 0 4px 6px rgba(0,0,0,0.02); position: relative; overflow: hidden;
+      transition: transform 0.5s var(--ease-out-expo), box-shadow 0.5s var(--ease-out-expo), border-color 0.4s ease;
+    }
+    .feature-box::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--accent), #ffd75e); transform: scaleX(0);
+      transform-origin: left; transition: transform 0.5s var(--ease-out-expo);
+    }
+    .feature-box:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(10, 31, 68, 0.1); }
+    .feature-box:hover::after { transform: scaleX(1); }
+    .feature-box h3 { font-size: 22px; margin-bottom: 15px; font-family: 'Inter', sans-serif; color: var(--primary); transition: color 0.4s var(--ease-out-quart); }
+    .feature-box:hover h3 { color: var(--accent); }
     .feature-box p { color: var(--text-gray); font-size: 15px; }
+
+    /* Clients Section */
+    .clients-box { 
+      background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; 
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; transition: transform 0.6s var(--ease-out-expo), box-shadow 0.6s var(--ease-out-expo); 
+    }
+    .clients-box:hover { transform: scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+    .clients-box img { width: 100%; max-width: 900px; margin: 0 auto; border-radius: 4px; }
 
     /* About Content */
     .about-content { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
-    .about-text h2 { font-size: 32px; margin-bottom: 20px; color: var(--primary); }
+    .about-text h2 { font-size: 34px; margin-bottom: 20px; color: var(--primary); }
     .about-text p { color: var(--text-gray); margin-bottom: 15px; font-size: 16px; }
     
     /* Contact Grid */
     .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
-    .contact-info-box { background: var(--bg-light); padding: 40px; border-radius: var(--radius); border: 1px solid var(--border); }
-    .contact-info-box h3 { font-size: 24px; margin-bottom: 20px; font-family: 'Inter', sans-serif; color: var(--primary);}
-    .contact-item { display: flex; margin-bottom: 20px; }
+    .contact-info-box { background: var(--bg-light); padding: 40px; border-radius: var(--radius); border: 1px solid var(--border); transition: border-color 0.4s var(--ease-out-quart), box-shadow 0.4s var(--ease-out-quart); }
+    .contact-info-box:hover { border-color: var(--accent); box-shadow: 0 10px 30px rgba(10, 31, 68, 0.06); }
+    .contact-info-box h3 { font-size: 24px; margin-bottom: 25px; font-family: 'Inter', sans-serif; color: var(--primary);}
+    .contact-item { display: flex; margin-bottom: 20px; transition: transform 0.4s var(--ease-out-expo), color 0.3s ease; }
+    .contact-item:hover { transform: translateX(6px); }
     .contact-item strong { display: block; width: 100px; color: var(--text-dark); }
 
+    /* Portfolio Tabs */
+    .portfolio-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; }
+    .tab-btn { 
+      padding: 12px 30px; border: 2px solid var(--border); background: var(--white); color: var(--text-dark); border-radius: var(--radius); font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; 
+      transition: background 0.35s var(--ease-out-quart), color 0.35s var(--ease-out-quart), border-color 0.35s var(--ease-out-quart), transform 0.35s var(--ease-spring), box-shadow 0.35s var(--ease-out-quart);
+    }
+    .tab-btn.active { background: var(--primary); color: var(--white); border-color: var(--primary); box-shadow: 0 4px 15px rgba(10, 31, 68, 0.2); }
+    .tab-btn:hover:not(.active) { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+
     /* Portfolio Grid */
-    .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-    .portfolio-item { position: relative; border-radius: var(--radius); overflow: hidden; aspect-ratio: 4/3; border: 1px solid var(--border); background: #f3f4f6; }
-    .portfolio-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
-    .portfolio-item:hover img { transform: scale(1.05); }
-    .portfolio-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10, 31, 68, 0.9), transparent); opacity: 0; transition: 0.3s; display: flex; align-items: flex-end; padding: 20px; }
+    .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+    .portfolio-item { 
+      position: relative; border-radius: var(--radius); overflow: hidden; aspect-ratio: 4/3; border: 1px solid var(--border); background: #f3f4f6; 
+      animation: revealUp 0.6s var(--ease-out-expo) backwards;
+    }
+    .portfolio-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease-out-expo), filter 0.5s ease; }
+    .portfolio-item:hover img { transform: scale(1.08); filter: brightness(0.9); }
+    .portfolio-overlay { 
+      position: absolute; inset: 0; background: linear-gradient(to top, rgba(10, 31, 68, 0.95), transparent); opacity: 0; 
+      display: flex; align-items: flex-end; padding: 20px; transition: opacity 0.5s var(--ease-out-quart), backdrop-filter 0.5s ease;
+    }
     .portfolio-item:hover .portfolio-overlay { opacity: 1; }
-    .portfolio-overlay h4 { color: var(--white); font-family: 'Inter', sans-serif; font-size: 16px; }
+    .portfolio-overlay h4 { color: var(--white); font-family: 'Inter', sans-serif; font-size: 16px; transform: translateY(10px); transition: transform 0.5s var(--ease-spring); }
+    .portfolio-item:hover .portfolio-overlay h4 { transform: translateY(0); }
 
     /* Footer */
-    footer { background: var(--primary); color: #9ca3af; padding: 60px 0 20px; }
+    footer { background: var(--primary); color: #9ca3af; padding: 70px 0 20px; }
     .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
-    .footer-logo img { height: 80px; background: var(--white); padding: 10px; border-radius: 4px; margin-bottom: 20px; }
+    .footer-logo img { height: 80px; background: var(--white); padding: 10px; border-radius: 4px; margin-bottom: 20px; transition: transform 0.5s var(--ease-spring); }
+    .footer-logo img:hover { transform: scale(1.05); }
     footer h4 { color: var(--white); margin-bottom: 20px; font-size: 18px; font-family: 'Inter', sans-serif; }
-    footer a { display: block; color: #9ca3af; margin-bottom: 10px; cursor: pointer; }
-    footer a:hover { color: var(--accent); }
+    footer a { display: block; color: #9ca3af; margin-bottom: 10px; cursor: pointer; transition: color 0.3s ease, transform 0.4s var(--ease-out-expo); }
+    footer a:hover { color: var(--accent); transform: translateX(4px); }
     footer p { margin-bottom: 10px; }
     .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid #1f2937; font-size: 14px; color: #9ca3af; }
 
     /* Modal */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 2000; }
-    .modal-content { background: var(--white); padding: 40px; border-radius: var(--radius); width: 90%; max-width: 500px; position: relative; border-top: 5px solid var(--accent); }
-    .close-btn { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: var(--text-gray); background: none; border: none; }
+    .modal-overlay { 
+      position: fixed; inset: 0; background: rgba(10, 31, 68, 0.7); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; z-index: 2000; 
+      opacity: 0; visibility: hidden; transition: opacity 0.35s var(--ease-out-quart), visibility 0.35s; 
+    }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+    .modal-content { 
+      background: var(--white); padding: 40px; border-radius: var(--radius); width: 90%; max-width: 500px; position: relative; border-top: 5px solid var(--accent); 
+      transform: scale(0.94) translateY(30px); opacity: 0; transition: transform 0.5s var(--ease-spring), opacity 0.4s var(--ease-out-expo); 
+    }
+    .modal-overlay.active .modal-content { transform: scale(1) translateY(0); opacity: 1; }
+    .close-btn { position: absolute; top: 15px; right: 20px; font-size: 28px; cursor: pointer; color: var(--text-gray); background: none; border: none; transition: transform 0.4s var(--ease-spring), color 0.3s ease; }
+    .close-btn:hover { color: var(--primary); transform: rotate(90deg); }
+
     .form-group { margin-bottom: 20px; }
     .form-group label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--primary); }
-    .form-group input, .form-group textarea { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius); outline: none; font-family: 'Inter', sans-serif;}
-    .form-group input:focus, .form-group textarea:focus { border-color: var(--primary); }
+    .form-group input, .form-group textarea { 
+      width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: var(--radius); outline: none; font-family: 'Inter', sans-serif; 
+      transition: border-color 0.3s ease, box-shadow 0.4s var(--ease-out-expo), transform 0.3s var(--ease-out-quart);
+    }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--primary); transform: translateY(-1px); box-shadow: 0 0 0 4px rgba(10, 31, 68, 0.08), 0 4px 12px rgba(10, 31, 68, 0.05); }
 
     /* Responsive */
     @media (max-width: 900px) {
@@ -123,8 +273,15 @@
       .features-grid { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; }
       .nav-links { display: none; }
+      .portfolio-tabs { flex-direction: column; }
     }
     .hidden { display: none !important; }
+
+    /* Accessibility: Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
   </style>
 </head>
 <body>
@@ -137,8 +294,8 @@
     </div>
   </div>
 
-  <!-- Header (Full Logo) -->
-  <header class="header">
+  <!-- Header -->
+  <header class="header" id="main-header">
     <div class="container header-main">
       <a onclick="app.navigate('home')" class="logo" style="cursor: pointer;">
         <img src="img/logo-full.png" alt="Action Traders Logo">
@@ -161,27 +318,24 @@
   <main id="app-content">
     
     <!-- 1. HOME PAGE -->
-    <div id="page-home" class="page">
+    <div id="page-home" class="page page-active">
       <section class="hero">
         <div class="container hero-grid">
           <div>
             <h1>Supplier of Choice for Fire Detection & Protection</h1>
             <p>Action Traders designs, supplies, and installs fire hydrant, alarm, and suppression systems — plus PPE and safety gear across Pakistan.</p>
-            <div style="display: flex; gap: 15px;">
+            <div class="btn-group" style="display: flex; gap: 15px;">
               <a onclick="app.navigate('portfolio')" class="btn btn-red">View Portfolio</a>
               <a onclick="app.navigate('about')" class="btn btn-outline">About Us</a>
             </div>
           </div>
-          
-          <!-- Yahan Small Logo use ho gaya hai (Pehli Image) -->
           <div class="hero-img">
             <img src="img/logo-small.png" alt="Action Traders Icon">
           </div>
-          
         </div>
       </section>
 
-      <section class="section">
+      <section class="section reveal">
         <div class="container">
           <h2 class="section-title">Why Choose Action Traders</h2>
           <p class="section-subtitle">We deliver complete, compliant, and reliable fire safety solutions tailored to your exact requirements.</p>
@@ -201,6 +355,18 @@
           </div>
         </div>
       </section>
+
+      <!-- CLIENTS SECTION -->
+      <section class="section section-gray reveal">
+        <div class="container">
+          <h2 class="section-title">Our Valuable Clients</h2>
+          <p class="section-subtitle">We are proud to supply and support leading brands and industries across Pakistan.</p>
+          <div class="clients-box">
+            <img src="img/clients.jpg" alt="Our Valuable Clients">
+          </div>
+        </div>
+      </section>
+
     </div>
 
     <!-- 2. ABOUT PAGE -->
@@ -211,7 +377,7 @@
           <p>A name built on quality — fire, safety, and security since 2018.</p>
         </div>
       </div>
-      <section class="section">
+      <section class="section reveal">
         <div class="container about-content">
           <div class="about-text">
             <h2>Leading Supplier Since 2018</h2>
@@ -223,12 +389,9 @@
               <p style="margin: 0;"><b>NTN:</b> 9531375-6</p>
             </div>
           </div>
-          
-          <!-- Yahan bhi small logo use kiya hai taake page balanced lage -->
           <div class="hero-img" style="min-height: 300px;">
             <img src="img/logo-small.png" alt="Action Traders" style="max-height: 200px;">
           </div>
-          
         </div>
       </section>
     </div>
@@ -243,12 +406,26 @@
       </div>
       <section class="section">
         <div class="container">
-          <div class="portfolio-grid" id="portfolio-grid">
-            <!-- Images loaded via JS -->
+          
+          <div class="portfolio-tabs">
+            <button class="tab-btn active" id="tab-projects" onclick="app.switchTab('projects')">Project & Installations</button>
+            <button class="tab-btn" id="tab-products" onclick="app.switchTab('products')">Fire Safety Products</button>
           </div>
-          <div style="text-align: center; margin-top: 50px;" id="load-more-container">
-            <button class="btn btn-outline" onclick="app.loadMore()">Load More Images</button>
+
+          <div id="group-projects">
+            <div class="portfolio-grid" id="grid-projects"></div>
+            <div style="text-align: center; margin-top: 50px;" id="load-more-projects">
+              <button class="btn btn-outline" onclick="app.loadMoreProjects()">Load More Projects</button>
+            </div>
           </div>
+
+          <div id="group-products" class="hidden">
+            <div class="portfolio-grid" id="grid-products"></div>
+            <div style="text-align: center; margin-top: 50px;" id="load-more-products">
+              <button class="btn btn-outline" onclick="app.loadMoreProducts()">Load More Products</button>
+            </div>
+          </div>
+
         </div>
       </section>
     </div>
@@ -261,25 +438,15 @@
           <p>Reach out for stock, specs, and project quotes.</p>
         </div>
       </div>
-      <section class="section">
+      <section class="section reveal">
         <div class="container contact-grid">
           <div class="contact-info-box">
             <h3>Get in Touch</h3>
-            <div class="contact-item">
-              <strong>Phone:</strong> <span>0330-3560372</span>
-            </div>
-            <div class="contact-item">
-              <strong>Mobile:</strong> <span>0316-1136245</span>
-            </div>
-            <div class="contact-item">
-              <strong>Email:</strong> <span>action.traders1453@gmail.com</span>
-            </div>
-            <div class="contact-item">
-              <strong>Hours:</strong> <span>Mon–Sat: 10:00 AM – 7:00 PM</span>
-            </div>
-            <div class="contact-item">
-              <strong>Address:</strong> <span>149 Block 16, Water Pump, F.B Area, Karachi-75950</span>
-            </div>
+            <div class="contact-item"><strong>Phone:</strong> <span>0330-3560372</span></div>
+            <div class="contact-item"><strong>Mobile:</strong> <span>0316-1136245</span></div>
+            <div class="contact-item"><strong>Email:</strong> <span>action.traders1453@gmail.com</span></div>
+            <div class="contact-item"><strong>Hours:</strong> <span>Mon–Sat: 10:00 AM – 7:00 PM</span></div>
+            <div class="contact-item"><strong>Address:</strong> <span>149 Block 16, Water Pump, F.B Area, Karachi-75950</span></div>
           </div>
           <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
             <h3 style="margin-bottom: 15px; font-family: 'Inter', sans-serif; color: var(--primary);">Need a Quotation?</h3>
@@ -292,7 +459,7 @@
 
   </main>
 
-  <!-- Footer (Full Logo) -->
+  <!-- Footer -->
   <footer>
     <div class="container">
       <div class="footer-grid">
@@ -329,7 +496,7 @@
       <button class="close-btn" onclick="app.closeModal()">&times;</button>
       <h2 style="margin-bottom: 20px; font-family: 'Inter'; color: var(--primary);">Get a Quote</h2>
       <p style="color: var(--text-gray); margin-bottom: 25px; font-size: 14px;">Tell us your requirement and we'll email you right back.</p>
-      <form action="https://formsubmit.co/action.traders1453@gmail.com" method="POST">
+	        <form action="https://formsubmit.co/action.traders1453@gmail.com" method="POST">
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_subject" value="New Quote Request - Action Traders">
         <div class="form-group"><label>Name</label><input type="text" name="name" required></div>
@@ -343,59 +510,182 @@
 
   <script>
     const app = {
-      portfolioTotalImages: 167, 
-      imagesPerLoad: 12, 
-      loadedCount: 0,
-      portfolioNames: ['Fire Alarm System', 'Hydrant Installation', 'PPE Supply', 'Safety Equipment', 'Suppression System', 'Industrial Safety'],
+      // 132 Specific Project Images
+      projectNumbers: [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 44, 46, 47, 48, 50, 51, 53, 54, 56, 57, 58, 59, 60, 61, 62, 63, 65, 66, 67, 68, 70, 72, 73, 74, 75, 76, 77, 78, 79, 80, 82, 83, 84, 86, 87, 88, 90, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 104, 105, 106, 107, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 136, 137, 138, 139, 140, 141, 142, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163],
+      projectImagesPerLoad: 12,
+      loadedProjects: 0,
+      projectNames: ['Fire Alarm System', 'Hydrant Installation', 'PPE Supply', 'Safety Equipment', 'Suppression System', 'Industrial Safety'],
 
+      // Specific Fire Product Images
+      productNumbers: [1, 3, 4, 5, 6, 7, 8, 9, 10, 24, 43, 45, 49, 52, 55, 64, 69, 71, 81, 85, 89, 91, 103, 108, 124, 135, 143, 164, 165, 166, 167],
+      productImagesPerLoad: 12,
+      loadedProducts: 0,
+
+      observer: null,
+
+      // 1. HEADER SCROLL EFFECT + OBSERVER SETUP
+      init: function() {
+        window.addEventListener('scroll', () => {
+          const header = document.getElementById('main-header');
+          header.classList.toggle('scrolled', window.scrollY > 50);
+        }, { passive: true });
+
+        // IntersectionObserver for premium scroll reveals
+        this.observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('active');
+              this.observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+        this.observeReveals();
+      },
+
+      observeReveals: function() {
+        document.querySelectorAll('.reveal:not(.active)').forEach(el => {
+          this.observer.observe(el);
+        });
+      },
+
+      // 2. PAGE NAVIGATION
       navigate: function(pageName) {
-        document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
+        document.querySelectorAll('.page').forEach(page => {
+          page.classList.add('hidden');
+          page.classList.remove('page-active');
+        });
         document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
         
-        document.getElementById(`page-${pageName}`).classList.remove('hidden');
+        const newPage = document.getElementById(`page-${pageName}`);
+        newPage.classList.remove('hidden');
+        
+        // Trigger reflow to restart CSS animation
+        void newPage.offsetWidth;
+        newPage.classList.add('page-active');
+        
         document.getElementById(`nav-${pageName}`).classList.add('active');
         
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
-        if(pageName === 'portfolio' && this.loadedCount === 0) {
-          this.loadMore();
+        if (pageName === 'portfolio' && this.loadedProjects === 0) {
+          this.loadMoreProjects();
+        }
+        
+        setTimeout(() => this.observeReveals(), 150);
+      },
+
+      // 3. TAB SWITCHING
+      switchTab: function(tabName) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(`tab-${tabName}`).classList.add('active');
+
+        if (tabName === 'projects') {
+          document.getElementById('group-projects').classList.remove('hidden');
+          document.getElementById('group-products').classList.add('hidden');
+          if (this.loadedProjects === 0) this.loadMoreProjects();
+        } else {
+          document.getElementById('group-products').classList.remove('hidden');
+          document.getElementById('group-projects').classList.add('hidden');
+          if (this.loadedProducts === 0) this.loadMoreProducts();
         }
       },
 
-      openModal: function() {
-        document.getElementById('quoteModal').style.display = 'flex';
-      },
-      closeModal: function() {
-        document.getElementById('quoteModal').style.display = 'none';
-      },
+      // 4. LOAD MORE PROJECTS (Fixed folder path)
+      loadMoreProjects: function() {
+        const grid = document.getElementById('grid-projects');
+        const start = this.loadedProjects;
+        const end = Math.min(start + this.projectImagesPerLoad, this.projectNumbers.length);
 
-      loadMore: function() {
-        const grid = document.getElementById('portfolio-grid');
-        const end = Math.min(this.loadedCount + this.imagesPerLoad, this.portfolioTotalImages);
-        
-        for (let i = this.loadedCount + 1; i <= end; i++) {
-          const imgSrc = `portfolio/${i}.jpg`; 
-          const projectName = this.portfolioNames[i % this.portfolioNames.length];
-
+        for (let i = start; i < end; i++) {
+          const num = this.projectNumbers[i];
           const item = document.createElement('div');
           item.className = 'portfolio-item';
+          item.style.animationDelay = `${(i - start) * 0.06}s`;
+
+          const title = this.projectNames[i % this.projectNames.length];
           
+          // UPDATED PATH: Uses 'portfolio/' folder as per brief
+          const src = `portfolio/${num}.jpg`; 
+
           item.innerHTML = `
-            <img src="${imgSrc}" alt="Project ${i}" loading="lazy" onerror="this.src='https://placehold.co/600x400/e5e7eb/6b7280?text=Image+Not+Found'">
+            <img src="${src}" alt="${title}" loading="lazy"
+                 onerror="this.src='img/logo-small.png'; this.style.objectFit='contain'; this.style.padding='40px'; this.style.background='#fff';">
             <div class="portfolio-overlay">
-              <h4>${projectName}</h4>
+              <h4>${title}</h4>
             </div>
           `;
           grid.appendChild(item);
         }
 
-        this.loadedCount = end;
+        this.loadedProjects = end;
 
-        if (this.loadedCount >= this.portfolioTotalImages) {
-          document.getElementById('load-more-container').style.display = 'none';
+        if (this.loadedProjects >= this.projectNumbers.length) {
+          document.getElementById('load-more-projects').style.display = 'none';
         }
+      },
+
+      // 5. LOAD MORE PRODUCTS (Fixed folder path)
+      loadMoreProducts: function() {
+        const grid = document.getElementById('grid-products');
+        const start = this.loadedProducts;
+        const end = Math.min(start + this.productImagesPerLoad, this.productNumbers.length);
+
+        for (let i = start; i < end; i++) {
+          const num = this.productNumbers[i];
+          const item = document.createElement('div');
+          item.className = 'portfolio-item';
+          item.style.animationDelay = `${(i - start) * 0.06}s`;
+
+          const title = `Safety Product ${num}`;
+          
+          // UPDATED PATH: Uses 'fireproduct/' folder as per brief
+          const src = `fireproduct/${num}.jpg`;
+
+          item.innerHTML = `
+            <img src="${src}" alt="${title}" loading="lazy"
+                 onerror="this.src='img/logo-small.png'; this.style.objectFit='contain'; this.style.padding='40px'; this.style.background='#fff';">
+            <div class="portfolio-overlay">
+              <h4>${title}</h4>
+            </div>
+          `;
+          grid.appendChild(item);
+        }
+
+        this.loadedProducts = end;
+
+        if (this.loadedProducts >= this.productNumbers.length) {
+          document.getElementById('load-more-products').style.display = 'none';
+        }
+      },
+
+      // 6. MODAL CONTROLS
+      openModal: function() {
+        document.getElementById('quoteModal').classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      },
+
+      closeModal: function() {
+        document.getElementById('quoteModal').classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
       }
     };
+
+    // Boot the app on DOM load
+    document.addEventListener('DOMContentLoaded', () => app.init());
+
+    // Close modal when clicking on the dark overlay background
+    document.getElementById('quoteModal').addEventListener('click', (e) => {
+      if (e.target.id === 'quoteModal') app.closeModal();
+    });
+
+    // Close modal on 'Escape' key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.getElementById('quoteModal').classList.contains('active')) {
+        app.closeModal();
+      }
+    });
   </script>
+
 </body>
 </html>
