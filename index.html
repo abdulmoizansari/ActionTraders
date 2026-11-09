@@ -9,39 +9,26 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@700&display=swap" rel="stylesheet">
   
   <style>
+    /* CSS stays the same, no changes needed here */
     :root {
-      --primary: #0a1f44; 
-      --accent: #f5b800; 
-      --primary-dark: #071630;
-      --text-dark: #111827;
-      --text-gray: #4b5563;
-      --bg-light: #f9fafb;
-      --white: #ffffff;
-      --border: #e5e7eb;
-      --radius: 8px;
-      
+      --primary: #0a1f44; --accent: #f5b800; --primary-dark: #071630;
+      --text-dark: #111827; --text-gray: #4b5563; --bg-light: #f9fafb;
+      --white: #ffffff; --border: #e5e7eb; --radius: 8px;
       --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
       --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
       --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: var(--white); color: var(--text-dark); font-family: 'Inter', sans-serif; line-height: 1.6; overflow-x: hidden;}
     h1, h2, h3, h4 { font-family: 'Merriweather', serif; font-weight: 700; }
     a { text-decoration: none; color: inherit; }
     img { max-width: 100%; height: auto; display: block; }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-    
-    /* Animations */
     @keyframes pageEnter { from { opacity: 0; transform: translateY(24px) scale(0.995); filter: blur(4px); } to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } }
     @keyframes revealUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-    
     .page-active { animation: pageEnter 0.7s var(--ease-out-expo) forwards; }
-    
     .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo); }
     .reveal.active { opacity: 1; transform: translateY(0); }
-
-    /* Topbar & Header */
     .topbar { background: var(--primary); color: #d1d5db; font-size: 13px; padding: 10px 0; }
     .topbar .container { display: flex; justify-content: space-between; flex-wrap: wrap; }
     .topbar a:hover { color: var(--white); }
@@ -55,8 +42,6 @@
     .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; background: var(--accent); transform: translateX(-50%); transition: width 0.4s var(--ease-out-expo); }
     .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
     .nav-links a:hover, .nav-links a.active { color: var(--primary); }
-
-    /* Buttons */
     .btn { padding: 12px 24px; border-radius: var(--radius); font-weight: 700; cursor: pointer; border: none; display: inline-block; text-align: center; position: relative; overflow: hidden; transition: all 0.35s var(--ease-spring); box-shadow: 0 4px 10px rgba(0,0,0,0.05);}
     .btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent); transition: left 0.6s var(--ease-out-expo); }
     .btn:hover::before { left: 100%; }
@@ -65,12 +50,9 @@
     .btn-red:hover { background: var(--primary-dark); box-shadow: 0 8px 20px rgba(10, 31, 68, 0.3); }
     .btn-outline { border: 2px solid var(--primary); color: var(--primary); background: transparent; z-index: 1; }
     .btn-outline:hover { color: var(--white); border-color: var(--primary); }
-
-    /* Page Heroes & Sections */
     .page-hero { background: var(--bg-light); padding: 60px 0; border-bottom: 1px solid var(--border); text-align: center; border-top: 4px solid var(--accent); }
     .page-hero h1 { font-size: 38px; color: var(--primary); margin-bottom: 10px; }
     .page-hero p { font-size: 18px; color: var(--text-gray); }
-    
     .hero { padding: 100px 0; border-bottom: 1px solid var(--border); background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%); }
     .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
     .hero h1 { font-size: 46px; line-height: 1.15; margin-bottom: 20px; color: var(--primary); }
@@ -78,13 +60,10 @@
     .hero-img { border-radius: var(--radius); overflow: hidden; box-shadow: 0 20px 40px rgba(10, 31, 68, 0.08); border: 1px solid var(--border); background: #fff; display: flex; align-items: center; justify-content: center; min-height: 400px; padding: 40px; transition: transform 0.6s var(--ease-out-expo); }
     .hero-img:hover { transform: translateY(-5px); }
     .hero-img img { width: 100%; height: auto; object-fit: contain; max-height: 300px; }
-
     .section { padding: 100px 0; }
     .section-gray { background: var(--bg-light); }
     .section-title { font-size: 34px; text-align: center; margin-bottom: 15px; color: var(--primary); }
     .section-subtitle { text-align: center; color: var(--text-gray); margin-bottom: 60px; font-size: 17px; max-width: 600px; margin-left: auto; margin-right: auto; }
-
-    /* Features & Clients */
     .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
     .feature-box { background: var(--white); padding: 40px 30px; border-radius: var(--radius); border: 1px solid var(--border); border-top: 4px solid var(--accent); transition: all 0.5s var(--ease-out-expo); }
     .feature-box:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(10, 31, 68, 0.1); }
@@ -93,8 +72,6 @@
     .clients-box { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: transform 0.6s var(--ease-out-expo); }
     .clients-box:hover { transform: scale(1.02); }
     .clients-box img { width: 100%; max-width: 900px; margin: 0 auto; }
-
-    /* About & Contact */
     .about-content { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
     .about-text h2 { font-size: 34px; margin-bottom: 20px; color: var(--primary); }
     .about-text p { color: var(--text-gray); margin-bottom: 15px; }
@@ -105,13 +82,10 @@
     .contact-item { display: flex; margin-bottom: 20px; transition: transform 0.4s var(--ease-out-expo); }
     .contact-item:hover { transform: translateX(6px); }
     .contact-item strong { display: block; width: 100px; }
-
-    /* Portfolio */
     .portfolio-tabs { display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; }
     .tab-btn { padding: 12px 30px; border: 2px solid var(--border); background: var(--white); color: var(--text-dark); border-radius: var(--radius); font-weight: 700; cursor: pointer; transition: all 0.35s var(--ease-spring); }
     .tab-btn.active { background: var(--primary); color: var(--white); border-color: var(--primary); box-shadow: 0 4px 15px rgba(10, 31, 68, 0.2); }
     .tab-btn:hover:not(.active) { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
-
     .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
     .portfolio-item { position: relative; border-radius: var(--radius); overflow: hidden; aspect-ratio: 4/3; border: 1px solid var(--border); background: #f3f4f6; animation: revealUp 0.6s var(--ease-out-expo) backwards; }
     .portfolio-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease-out-expo); }
@@ -120,8 +94,6 @@
     .portfolio-item:hover .portfolio-overlay { opacity: 1; }
     .portfolio-overlay h4 { color: var(--white); transform: translateY(10px); transition: transform 0.5s var(--ease-spring); }
     .portfolio-item:hover .portfolio-overlay h4 { transform: translateY(0); }
-
-    /* Footer & Modal */
     footer { background: var(--primary); color: #9ca3af; padding: 70px 0 20px; }
     .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
     .footer-logo img { height: 80px; background: var(--white); padding: 10px; border-radius: 4px; margin-bottom: 20px; }
@@ -129,7 +101,6 @@
     footer a { display: block; margin-bottom: 10px; cursor: pointer; transition: color 0.3s ease; }
     footer a:hover { color: var(--accent); }
     .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid #1f2937; font-size: 14px; }
-
     .modal-overlay { position: fixed; inset: 0; background: rgba(10, 31, 68, 0.7); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; z-index: 2000; opacity: 0; visibility: hidden; transition: all 0.35s ease; }
     .modal-overlay.active { opacity: 1; visibility: visible; }
     .modal-content { background: var(--white); padding: 40px; border-radius: var(--radius); width: 90%; max-width: 500px; border-top: 5px solid var(--accent); transform: scale(0.94) translateY(30px); transition: all 0.5s var(--ease-spring); }
@@ -140,7 +111,6 @@
     .form-group label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--primary); }
     .form-group input, .form-group textarea { width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: var(--radius); transition: all 0.3s ease; }
     .form-group input:focus, .form-group textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(10, 31, 68, 0.08); }
-
     @media (max-width: 900px) {
       .hero-grid, .about-content, .contact-grid, .features-grid, .footer-grid { grid-template-columns: 1fr; }
       .nav-links { display: none; }
@@ -176,6 +146,7 @@
   </header>
 
   <main id="app-content">
+    <!-- (Baqi HTML waisa hi hai, isme koi change nahi hua) -->
     <div id="page-home" class="page page-active">
       <section class="hero">
         <div class="container hero-grid">
@@ -192,46 +163,28 @@
           </div>
         </div>
       </section>
-
       <section class="section reveal">
         <div class="container">
           <h2 class="section-title">Why Choose Action Traders</h2>
           <p class="section-subtitle">We deliver complete, compliant, and reliable fire safety solutions tailored to your exact requirements.</p>
           <div class="features-grid">
-            <div class="feature-box">
-              <h3>Turnkey Installations</h3>
-              <p>Complete design, supply, and commissioning of fire-fighting systems for commercial and industrial sites.</p>
-            </div>
-            <div class="feature-box">
-              <h3>Quality & Compliance</h3>
-              <p>Globally accepted standards. Products undergo strict inspection for maximum safety.</p>
-            </div>
-            <div class="feature-box">
-              <h3>Maintenance & Refilling</h3>
-              <p>Expert servicing and refilling of dry powder, CO2, and foam extinguishers.</p>
-            </div>
+            <div class="feature-box"><h3>Turnkey Installations</h3><p>Complete design, supply, and commissioning of fire-fighting systems for commercial and industrial sites.</p></div>
+            <div class="feature-box"><h3>Quality & Compliance</h3><p>Globally accepted standards. Products undergo strict inspection for maximum safety.</p></div>
+            <div class="feature-box"><h3>Maintenance & Refilling</h3><p>Expert servicing and refilling of dry powder, CO2, and foam extinguishers.</p></div>
           </div>
         </div>
       </section>
-
       <section class="section section-gray reveal">
         <div class="container">
           <h2 class="section-title">Our Valuable Clients</h2>
           <p class="section-subtitle">We are proud to supply and support leading brands and industries across Pakistan.</p>
-          <div class="clients-box">
-            <img src="img/clients.jpg" alt="Our Valuable Clients">
-          </div>
+          <div class="clients-box"><img src="img/clients.jpg" alt="Our Valuable Clients"></div>
         </div>
       </section>
     </div>
 
     <div id="page-about" class="page hidden">
-      <div class="page-hero">
-        <div class="container">
-          <h1>About Action Traders</h1>
-          <p>A name built on quality — fire, safety, and security since 2018.</p>
-        </div>
-      </div>
+      <div class="page-hero"><div class="container"><h1>About Action Traders</h1><p>A name built on quality — fire, safety, and security since 2018.</p></div></div>
       <section class="section reveal">
         <div class="container about-content">
           <div class="about-text">
@@ -244,51 +197,33 @@
               <p style="margin: 0;"><b>NTN:</b> 9531375-6</p>
             </div>
           </div>
-          <div class="hero-img" style="min-height: 300px;">
-            <img src="img/logo-small.png" alt="Action Traders" style="max-height: 200px;">
-          </div>
+          <div class="hero-img" style="min-height: 300px;"><img src="img/logo-small.png" alt="Action Traders" style="max-height: 200px;"></div>
         </div>
       </section>
     </div>
 
     <div id="page-portfolio" class="page hidden">
-      <div class="page-hero">
-        <div class="container">
-          <h1>Our Portfolio</h1>
-          <p>Showcase of our installations, safety equipment, and projects.</p>
-        </div>
-      </div>
+      <div class="page-hero"><div class="container"><h1>Our Portfolio</h1><p>Showcase of our installations, safety equipment, and projects.</p></div></div>
       <section class="section">
         <div class="container">
           <div class="portfolio-tabs">
             <button class="tab-btn active" id="tab-projects" onclick="app.switchTab('projects')">Project & Installations</button>
             <button class="tab-btn" id="tab-products" onclick="app.switchTab('products')">Fire Safety Products</button>
           </div>
-
           <div id="group-projects">
             <div class="portfolio-grid" id="grid-projects"></div>
-            <div style="text-align: center; margin-top: 50px;" id="load-more-projects">
-              <button class="btn btn-outline" onclick="app.loadMoreProjects()">Load More Projects</button>
-            </div>
+            <div style="text-align: center; margin-top: 50px;" id="load-more-projects"><button class="btn btn-outline" onclick="app.loadMoreProjects()">Load More Projects</button></div>
           </div>
-
           <div id="group-products" class="hidden">
             <div class="portfolio-grid" id="grid-products"></div>
-            <div style="text-align: center; margin-top: 50px;" id="load-more-products">
-              <button class="btn btn-outline" onclick="app.loadMoreProducts()">Load More Products</button>
-            </div>
+            <div style="text-align: center; margin-top: 50px;" id="load-more-products"><button class="btn btn-outline" onclick="app.loadMoreProducts()">Load More Products</button></div>
           </div>
         </div>
       </section>
     </div>
 
     <div id="page-contact" class="page hidden">
-      <div class="page-hero">
-        <div class="container">
-          <h1>Contact Us</h1>
-          <p>Reach out for stock, specs, and project quotes.</p>
-        </div>
-      </div>
+      <div class="page-hero"><div class="container"><h1>Contact Us</h1><p>Reach out for stock, specs, and project quotes.</p></div></div>
       <section class="section reveal">
         <div class="container contact-grid">
           <div class="contact-info-box">
@@ -313,9 +248,7 @@
     <div class="container">
       <div class="footer-grid">
         <div>
-          <div class="footer-logo">
-            <img src="img/logo-full.png" alt="Action Traders">
-          </div>
+          <div class="footer-logo"><img src="img/logo-full.png" alt="Action Traders"></div>
           <p>Leading supplier of fire detection, fire protection, and safety gear. Serving Karachi and all of Pakistan with premium solutions.</p>
         </div>
         <div>
@@ -333,9 +266,7 @@
           <p><b>Address:</b> 149 Block 16, Water Pump, F.B Area, Karachi</p>
         </div>
       </div>
-      <div class="footer-bottom">
-        &copy; 2024 Action Traders. All rights reserved. | NTN: 9531375-6
-      </div>
+      <div class="footer-bottom">&copy; 2024 Action Traders. All rights reserved. | NTN: 9531375-6</div>
     </div>
   </footer>
 
@@ -358,12 +289,12 @@
 
   <script>
     const app = {
-      // Updated arrays with EXACT numbers from your screenshots
-      projectNumbers: [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 44, 46, 47, 48, 50, 51, 53, 54, 56, 57, 58, 59, 60, 61, 62, 63, 65, 66, 67, 68, 70, 72, 73, 74, 75, 76, 77, 78, 80, 82, 83, 84, 86, 87, 88, 90, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162],
+      projectNumbers: [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 44, 46, 47, 48, 50, 51, 53, 54, 56, 57, 58, 59, 60, 61, 62, 63, 65, 66, 67, 68, 70, 72, 73, 74, 75, 76, 77, 78, 80, 82, 83, 84, 86, 87, 88, 90, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 104, 105, 106, 107, 109, 110, 111, 112, 113, 114, 115, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162],
       projectImagesPerLoad: 12,
       loadedProjects: 0,
       projectNames: ['Fire Alarm System', 'Hydrant Installation', 'PPE Supply', 'Safety Equipment', 'Suppression System', 'Industrial Safety'],
 
+      // Fireproduct numbers
       productNumbers: [3, 4, 5, 6, 7, 8, 9, 10, 24, 43, 45, 49, 50, 51, 52, 55, 62, 64, 69, 71, 81, 85, 89, 91, 103, 108, 124, 135, 143, 164, 165, 166, 167],
       productImagesPerLoad: 12,
       loadedProducts: 0,
@@ -442,6 +373,8 @@
           item.style.animationDelay = `${(i - start) * 0.06}s`;
 
           const title = this.projectNames[i % this.projectNames.length];
+          
+          // MAIN FIX: Lowercase folder name 'portfolio' and '.jpg'
           const src = `portfolio/${num}.jpg`; 
 
           item.innerHTML = `
@@ -473,7 +406,9 @@
           item.style.animationDelay = `${(i - start) * 0.06}s`;
 
           const title = `Safety Product ${num}`;
-          const src = `fireproduct/${num}.jpg`;
+          
+          // MAIN FIX: Capital 'F' in 'Fireproduct' and '.jpg'
+          const src = `Fireproduct/${num}.jpg`;
 
           item.innerHTML = `
             <img src="${src}" alt="${title}" loading="lazy"
